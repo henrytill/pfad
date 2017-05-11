@@ -1,9 +1,9 @@
-{ mkDerivation, base, criterion, doctest, stdenv }:
+{ mkDerivation, array, base, criterion, doctest, stdenv }:
 mkDerivation {
   pname = "pfad";
   version = "0.1.0.0";
   src = ./.;
-  libraryHaskellDepends = [ base ];
+  libraryHaskellDepends = [ array base ];
   testHaskellDepends = [ base doctest ];
   benchmarkHaskellDepends = [ base criterion ];
   withBenchmarkDepends = true;
