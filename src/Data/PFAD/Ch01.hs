@@ -5,6 +5,7 @@
 module Data.PFAD.Ch01 where
 
 import Data.Array
+import Data.Array.ST
 
 -- * An array-based solution
 
@@ -19,7 +20,23 @@ minfree1 xs = head ([0..] \\ xs)
 (\\) :: Eq a => [a] -> [a] -> [a]
 us \\ vs = filter (flip notElem vs) us
 
--- | Computes the smallest number not in a given finite set.
+-- ** The key fact...
+
+-- $
+-- ... is that not every number in the range @[0..length xs]@ can be in @xs@.
+--
+-- The smallest number not in @xs@ is also the smallest number not in @filter
+-- (<= n) xs@ where @n = length xs@.
+--
+-- >>> let xs = [0, 1, 2, 3, 4, 8]
+-- >>> let n = length xs
+-- >>> filter (<= n) xs
+-- [0,1,2,3,4]
+--
+-- So, we build 'checklist' of those numbers present in @filter (<= n) xs@.
+
+-- | Computes the smallest number not in a given finite set (more efficient
+-- version).
 --
 -- >>> minfree2 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
@@ -27,7 +44,8 @@ us \\ vs = filter (flip notElem vs) us
 minfree2 ::  [Int] -> Int
 minfree2 = search . checklist
 
--- |
+-- | Searches for the first element in a 'checklist' which is 'False'
+--
 -- >>> search (listArray (0, 2) [False, False, False])
 -- 0
 -- >>> search (listArray (0, 2) [False, True, False])
@@ -46,7 +64,15 @@ minfree2 = search . checklist
 search :: Array Int Bool -> Int
 search = length . takeWhile id . elems
 
--- |
+-- | Builds a 'checklist' of those numbers present in @filter (<= n) xs@ where
+-- @n = length xs@.
+--
+-- A 'checklist' is a Boolean array with @n + 1@ slots, numbered from @0@ to
+-- @n@, whose initial entries are everywhere 'False'.
+--
+-- For each element @x@ in @xs@ and provided @x <= n@, we set the array element
+-- at position @x@ to 'True'.
+--
 -- >>> checklist [0]
 -- array (0,1) [(0,True),(1,False)]
 -- >>> checklist [0, 1]
@@ -59,3 +85,36 @@ search = length . takeWhile id . elems
 checklist :: [Int] -> Array Int Bool
 checklist xs = accumArray (||) False (0, n) (zip (filter (<= n) xs) (repeat True))
   where n = length xs
+
+countlist :: [Int] -> Array Int Int
+countlist xs = accumArray (+) 0 (0, n) (zip xs (repeat 1))
+  where n = maximum xs
+
+sort :: [Int] -> [Int]
+sort xs = concat [replicate k x | (x, k) <- assocs (countlist xs)]
+
+searchCount :: Array Int Int -> Int
+searchCount = length . takeWhile (== 1) . elems
+
+-- | Computes the smallest number not in a given finite set (alternate version).
+--
+-- >>> minfree3 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
+-- 15
+--
+minfree3 ::  [Int] -> Int
+minfree3 = searchCount . countlist
+
+checklistST :: [Int] -> Array Int Bool
+checklistST xs = runSTArray $ do
+  a <- newArray (0, n) False
+  sequence [writeArray a x True | x <- xs, x <= n]
+  return a
+  where n = length xs
+
+-- | Computes the smallest number not in a given finite set (procedural version).
+--
+-- >>> minfree4 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
+-- 15
+--
+minfree4 :: [Int] -> Int
+minfree4 = search . checklistST

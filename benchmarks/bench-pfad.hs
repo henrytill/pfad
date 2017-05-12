@@ -27,5 +27,14 @@ minfree2 =
   , bench "mftd20" $ whnf Ch01.minfree2 mftd20
   ]
 
+minfree4 =
+  bgroup "minfree4"
+  [ bench "mftd4"  $ whnf Ch01.minfree4 mftd4
+  , bench "mftd8"  $ whnf Ch01.minfree4 mftd8
+  , bench "mftd12" $ whnf Ch01.minfree4 mftd12
+  , bench "mftd16" $ whnf Ch01.minfree4 mftd16
+  , bench "mftd20" $ whnf Ch01.minfree4 mftd20
+  ]
+
 main :: IO ()
-main = defaultMain [ minfree1, minfree2 ]
+main = defaultMain [ minfree1, minfree2, minfree4 ]
