@@ -2,6 +2,9 @@ module Main (main) where
 
 import Criterion.Main
 import qualified Data.PFAD.Ch01 as Ch01
+import qualified Data.PFAD.Ch02 as Ch02
+
+-- * Chapter 1
 
 mftd20 = [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 mftd4  = take 4  mftd20
@@ -62,5 +65,17 @@ minfrees =
   , minfree7
   ]
 
+-- * Chapter 2
+
+mscd = "GENERATING"
+
+msc1 = bgroup "msc1" [ bench "msc1" $ whnf Ch02.msc1 mscd ]
+msc2 = bgroup "msc2" [ bench "msc2" $ whnf Ch02.msc2 mscd ]
+
+mscs =
+  [ msc1
+  , msc2
+  ]
+
 main :: IO ()
-main = defaultMain minfrees
+main = defaultMain (minfrees ++ mscs)

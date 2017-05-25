@@ -17,6 +17,7 @@ cabal-version:       >=1.10
 
 library
   exposed-modules:     Data.PFAD.Ch01
+                     , Data.PFAD.Ch02
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base  >=4.9 && <4.10
