@@ -6,7 +6,7 @@ mkDerivation {
   libraryHaskellDepends = [ array base ];
   testHaskellDepends = [ base doctest ];
   benchmarkHaskellDepends = [ base criterion ];
-  withBenchmarkDepends = true;
+  doBenchmark = true;
   description = "Work from Bird's \"Pearls of Functional Algorithm Design\"";
   license = stdenv.lib.licenses.publicDomain;
 }
