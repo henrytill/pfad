@@ -35,7 +35,7 @@ scount x xs = length (filter (x <) xs)
 -- [[0,1,2,3,4,5],[1,2,3,4,5],[2,3,4,5],[3,4,5],[4,5],[5]]
 --
 tails :: [a] -> [[a]]
-tails [] = []
+tails []       = []
 tails (x : xs) = (x : xs) : tails xs
 
 -- * Divide and conquer

@@ -113,7 +113,7 @@ minfree3 = searchCount . countlist
 checklistST :: [Int] -> Array Int Bool
 checklistST xs = runSTArray $ do
   a <- newArray (0, n) False
-  sequence [writeArray a x True | x <- xs, x <= n]
+  _ <- sequence [writeArray a x True | x <- xs, x <= n]
   return a
   where n = length xs
 
