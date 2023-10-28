@@ -20,26 +20,24 @@ library
                      , Data.PFAD.Ch02
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base  >=4.9 && <4.10
+  build-depends:       base  >=4.9 && <5
                      , array >=0.5 && <0.6
   hs-source-dirs:      src
   default-language:    Haskell2010
 
-test-suite doctests
+test-suite pfad-test
   type:                exitcode-stdio-1.0
   ghc-options:         -threaded
-  main-is:             doctests.hs
+  main-is:             Main.hs
   build-depends:       base
-                     , doctest          >=0.11 && <0.12
-                     , QuickCheck       >=2.9  && <2.10
-  hs-source-dirs:      tests
+  hs-source-dirs:      test
   default-language:    Haskell2010
 
-benchmark bench-pfad
+benchmark pfad-bench
   type:                exitcode-stdio-1.0
-  main-is:             bench-pfad.hs
+  main-is:             Main.hs
   build-depends:       base
-                     , criterion >=1.1 && <1.2
+                     , criterion >=1.1 && <1.7
                      , pfad
-  hs-source-dirs:      benchmarks
+  hs-source-dirs:      bench
   default-language:    Haskell2010
