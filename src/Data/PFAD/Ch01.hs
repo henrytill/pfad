@@ -1,7 +1,6 @@
 -- |
 -- Module      : Data.PFAD.Ch01
 -- Description : The smallest free number
---
 module Data.PFAD.Ch01 where
 
 import Data.Array
@@ -14,16 +13,14 @@ import Data.List (partition)
 --
 -- >>> minfree1 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
---
 minfree1 :: (Num a, Eq a, Enum a) => [a] -> a
-minfree1 xs = head ([0..] \\ xs)
+minfree1 xs = head ([0 ..] \\ xs)
 
 -- | Finds the elements of @us@ that are not present in @vs@
 --
 -- >>> [1, 2, 3, 4] \\ [2, 4, 6, 8]
 -- [1,3]
---
-(\\) :: Eq a => [a] -> [a] -> [a]
+(\\) :: (Eq a) => [a] -> [a] -> [a]
 us \\ vs = filter (flip notElem vs) us
 
 -- ** The key fact...
@@ -46,8 +43,7 @@ us \\ vs = filter (flip notElem vs) us
 --
 -- >>> minfree2 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
---
-minfree2 ::  [Int] -> Int
+minfree2 :: [Int] -> Int
 minfree2 = search . checklist
 
 -- | Searches for the first element in a 'checklist' which is 'False'
@@ -66,7 +62,6 @@ minfree2 = search . checklist
 -- 1
 -- >>> search (listArray (0, 2) [True, True, True])
 -- 3
---
 search :: Array Int Bool -> Int
 search = length . takeWhile id . elems
 
@@ -87,14 +82,15 @@ search = length . takeWhile id . elems
 -- array (0,3) [(0,True),(1,True),(2,True),(3,False)]
 -- >>> checklist [0, 1, 3]
 -- array (0,3) [(0,True),(1,True),(2,False),(3,True)]
---
 checklist :: [Int] -> Array Int Bool
 checklist xs = accumArray (||) False (0, n) (zip (filter (<= n) xs) (repeat True))
-  where n = length xs
+  where
+    n = length xs
 
 countlist :: [Int] -> Array Int Int
 countlist xs = accumArray (+) 0 (0, n) (zip xs (repeat 1))
-  where n = maximum xs
+  where
+    n = maximum xs
 
 sort :: [Int] -> [Int]
 sort xs = concat [replicate k x | (x, k) <- assocs (countlist xs)]
@@ -106,8 +102,7 @@ searchCount = length . takeWhile (== 1) . elems
 --
 -- >>> minfree3 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
---
-minfree3 ::  [Int] -> Int
+minfree3 :: [Int] -> Int
 minfree3 = searchCount . countlist
 
 checklistST :: [Int] -> Array Int Bool
@@ -115,38 +110,39 @@ checklistST xs = runSTArray $ do
   a <- newArray (0, n) False
   _ <- sequence [writeArray a x True | x <- xs, x <= n]
   return a
-  where n = length xs
+  where
+    n = length xs
 
 -- | Computes the smallest number not in a given finite set (procedural version).
 --
 -- >>> minfree4 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
---
 minfree4 :: [Int] -> Int
 minfree4 = search . checklistST
 
 -- * A divide and conquer solution
 
 minfrom1 :: Int -> [Int] -> Int
-minfrom1 a xs = head ([a..] \\ xs)
+minfrom1 a xs = head ([a ..] \\ xs)
 
 minfree5 :: [Int] -> Int
 minfree5 = minfrom1 0
 
 minfrom2 :: Int -> [Int] -> Int
-minfrom2 a xs | null xs            = a
-              | length us == b - a = minfrom2 b vs
-              | otherwise          = minfrom2 a us
-                where (us, vs) = partition (< b) xs
-                      b        = a + 1 + n `div` 2
-                      n        = length xs
+minfrom2 a xs
+  | null xs = a
+  | length us == b - a = minfrom2 b vs
+  | otherwise = minfrom2 a us
+  where
+    (us, vs) = partition (< b) xs
+    b = a + 1 + n `div` 2
+    n = length xs
 
 -- | Computes the smallest number not in a given finite set (a divide and
 -- conquer version).
 --
 -- >>> minfree6 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
---
 minfree6 :: [Int] -> Int
 minfree6 = minfrom2 0
 
@@ -155,14 +151,15 @@ minfree6 = minfrom2 0
 --
 -- >>> minfree7 [08, 23, 09, 00, 12, 11, 01, 10, 13, 07, 41, 04, 14, 21, 05, 17, 03, 19, 02, 06]
 -- 15
---
 minfree7 :: [Int] -> Int
 minfree7 xs = minfrom3 0 (length xs, xs)
 
 minfrom3 :: Int -> (Int, [Int]) -> Int
-minfrom3 a (n, xs) | n == 0     = a
-                   | m == b - a = minfrom3 b (n - m, vs)
-                   | otherwise  = minfrom3 a (m, us)
-                     where (us, vs) = partition (< b) xs
-                           b        = a + 1 + n `div` 2
-                           m        = length us
+minfrom3 a (n, xs)
+  | n == 0 = a
+  | m == b - a = minfrom3 b (n - m, vs)
+  | otherwise = minfrom3 a (m, us)
+  where
+    (us, vs) = partition (< b) xs
+    b = a + 1 + n `div` 2
+    m = length us
