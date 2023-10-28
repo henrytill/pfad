@@ -1,4 +1,5 @@
-dist/
-dist-newstyle/
-result
+/dist/
+/dist-newstyle/
+/*result*
+/cabal.project.local*
 .dir-locals.el
