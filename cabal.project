@@ -1,0 +1,18 @@
+packages: .
+
+source-repository-package
+    type: git
+    location: https://github.com/phadej/gentle-introduction
+    tag: fb336ff2f7a394ebbf71be04af199926f868a87c
+
+source-repository-package
+    type: git
+    location: https://github.com/phadej/cabal-extras
+    tag: 1eb4198381e3461298e27a67997761f91a5ba3d4
+    subdir: peura
+
+source-repository-package
+    type: git
+    location: https://github.com/phadej/cabal-extras
+    tag: 1eb4198381e3461298e27a67997761f91a5ba3d4
+    subdir: cabal-docspec

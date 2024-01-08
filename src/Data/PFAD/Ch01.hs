@@ -7,6 +7,9 @@ import Data.Array
 import Data.Array.ST
 import Data.List (partition)
 
+-- $setup
+-- >>> import Data.Array
+
 -- * An array-based solution
 
 -- | Computes the smallest number not in a given finite set.
