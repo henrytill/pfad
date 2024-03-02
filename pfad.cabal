@@ -1,7 +1,7 @@
 cabal-version:       2.4
 name:                pfad
 version:             0.1.0.0
-synopsis:            Work from Bird's "Pearls of Functional Algorithm Design"
+synopsis:            Pearls of Functional Algorithm Design
 description:         Work from Bird's "Pearls of Functional Algorithm Design"
 -- license
 -- license-file:
