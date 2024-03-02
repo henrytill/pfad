@@ -3,7 +3,7 @@ name:                pfad
 version:             0.1.0.0
 synopsis:            Work from Bird's "Pearls of Functional Algorithm Design"
 description:         Work from Bird's "Pearls of Functional Algorithm Design"
-license:             Unlicense
+-- license
 -- license-file:
 author:              Henry Till
 maintainer:          henrytill@gmail.com
