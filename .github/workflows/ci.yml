@@ -32,5 +32,4 @@ jobs:
             ${{ runner.os }}-
       - name: Build & Test
         run: |
-          cabal build all --enable-tests
-          cabal exec -- cabal-docspec
+          make test
