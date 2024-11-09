@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -Wno-x-partial #-}
+
 -- |
 -- Module      : Data.PFAD.Ch01
 -- Description : The smallest free number
