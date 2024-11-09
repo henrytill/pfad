@@ -1,6 +1,6 @@
 .SUFFIXES:
 
-GHC = ghc-9.2.8
+GHC = ghc-9.8.2
 
 .PHONY: all
 all: build
