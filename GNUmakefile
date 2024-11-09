@@ -11,4 +11,4 @@ build:
 
 .PHONY: test
 test: build
-	cabal v2-exec -- cabal-docspec -w $(GHC)
+	cabal v2-exec -w $(GHC) -- cabal-docspec -w $(GHC)
