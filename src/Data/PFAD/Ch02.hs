@@ -3,6 +3,9 @@
 -- Description : A surpassing problem
 module Data.PFAD.Ch02 where
 
+-- $setup
+-- >>> import Test.QuickCheck
+
 -- * Specification
 
 -- | Finds the maximum /surpasser count/ of an element.

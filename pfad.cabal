@@ -21,8 +21,6 @@ library
                      , array >=0.5 && <0.6
   hs-source-dirs:      src
   default-language:    Haskell98
-  x-docspec-options: --check-properties
-  x-docspec-property-variables: xs ys
 
 test-suite pfad-test
   type:                exitcode-stdio-1.0
@@ -30,7 +28,6 @@ test-suite pfad-test
   main-is:             Main.hs
   build-depends:       base
                      , QuickCheck >=2.14
-  build-tool-depends:  cabal-docspec:cabal-docspec
   hs-source-dirs:      test
   default-language:    Haskell98
 
