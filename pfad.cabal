@@ -1,4 +1,4 @@
-cabal-version:       2.4
+cabal-version:       3.0
 name:                pfad
 version:             0.1.0.0
 synopsis:            Pearls of Functional Algorithm Design
@@ -9,8 +9,12 @@ author:              Henry Till
 maintainer:          henrytill@gmail.com
 -- copyright:
 category:            Data
-build-type:          Simple
+build-type:          Custom
 -- extra-source-files:
+
+custom-setup
+  setup-depends:       base >=4 && <5
+                     , cabal-doctest >=1 && <1.1
 
 library
   exposed-modules:     Data.PFAD.Ch01
@@ -22,12 +26,14 @@ library
   hs-source-dirs:      src
   default-language:    Haskell98
 
-test-suite pfad-test
+test-suite doctests
   type:                exitcode-stdio-1.0
   ghc-options:         -threaded
   main-is:             Main.hs
   build-depends:       base
-                     , QuickCheck >=2.14
+                     , QuickCheck ^>=2.14
+                     , template-haskell >=2.19 && <2.24
+                     , doctest >=0.22.0 && <0.24
   hs-source-dirs:      test
   default-language:    Haskell98
 
