@@ -20,13 +20,13 @@
         }:
         let
           call = compiler: pkgs.haskell.packages.${compiler}.callCabal2nixWithOptions;
-          doctest = pkgs.haskell.packages.${compiler}.doctest;
-          flags = "";
           src = builtins.path {
             path = ./.;
             name = "pfad-src";
           };
+          flags = "";
           pfad_ = call compiler "pfad" src flags { };
+          doctest = pkgs.haskell.packages.${compiler}.doctest;
         in
         pkgs.haskell.lib.overrideCabal pfad_ (as: {
           inherit doCheck;
