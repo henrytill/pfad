@@ -12,7 +12,6 @@
       ...
     }:
     let
-      overlay = final: prev: { };
       makePfad =
         pkgs:
         {
@@ -40,6 +39,7 @@
             make PACKAGE_DB="$packageConfDir" test
           '';
         });
+      overlay = final: prev: { pfad = makePfad prev.pkgs { }; };
     in
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -50,7 +50,7 @@
         };
       in
       {
-        packages.pfad = makePfad pkgs { };
+        packages.pfad = pkgs.pfad;
         packages.default = self.packages.${system}.pfad;
       }
     );
