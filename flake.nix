@@ -36,7 +36,7 @@
           testToolDepends = [ doctest ];
           checkPhase = ''
             ghc-pkg --package-db=$packageConfDir list
-            make PACKAGE_DB="$packageConfDir" test
+            make PACKAGE_DB=$packageConfDir test
           '';
         });
       overlay = final: prev: { pfad = makePfad prev.pkgs { }; };
