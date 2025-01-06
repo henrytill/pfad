@@ -39,7 +39,7 @@
             make PACKAGE_DB=$packageConfDir test
           '';
         });
-      overlay = final: prev: { pfad = makePfad prev.pkgs { }; };
+      overlay = final: prev: { pfad = makePfad final.pkgs { }; };
     in
     flake-utils.lib.eachDefaultSystem (
       system:
