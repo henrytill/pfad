@@ -1,5 +1,6 @@
 .SUFFIXES:
 
+.ONESHELL:
 .SHELLFLAGS += -e
 
 CABAL = cabal
@@ -27,9 +28,9 @@ clean:
 
 check test:
 	@printf "Running doctests...\n"
-	@for file in $(SRC); do \
-	    printf "%s:\n" $$file; \
-	    $(DOCTEST) $$file $(ALL_DOCTEST_FLAGS); \
+	@for file in $(SRC); do
+	    printf "%s:\n" $$file;
+	    $(DOCTEST) $$file $(ALL_DOCTEST_FLAGS);
 	done
 
 .PHONY: all build check clean test
