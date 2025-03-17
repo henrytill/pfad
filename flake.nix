@@ -15,7 +15,7 @@
       makePfad =
         pkgs:
         {
-          compiler ? "ghc982",
+          compiler ? "ghc984",
           doCheck ? true,
         }:
         let
