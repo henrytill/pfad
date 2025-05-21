@@ -116,11 +116,10 @@ minfree3 = searchCount . countlist
 
 checklistST :: [Int] -> Array Int Bool
 checklistST xs = runSTArray $ do
+  let n = length xs
   a <- newArray (0, n) False
   _ <- sequence [writeArray a x True | x <- xs, x <= n]
   return a
-  where
-    n = length xs
 
 -- | Computes the smallest number not in a given finite set (procedural version).
 --
