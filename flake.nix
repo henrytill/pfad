@@ -32,9 +32,8 @@
           inherit doCheck;
           isExecutable = true;
           isLibrary = true;
-          doHaddock = false;
           testToolDepends = [ doctest ];
-          checkPhase = ''
+          preHaddock = ''
             ghc-pkg --package-db=$packageConfDir list
             make PACKAGE_DB=$packageConfDir test
           '';
